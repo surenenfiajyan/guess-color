@@ -6,4 +6,4 @@ This game is designed for Chrome and Chromium based browsers and it won't run no
 1. Perhaps the easiest one, just open this [link](https://surenenfiajyan.github.io/).
 2. If you want to run locally, download the source code and unpack in some folder. On Chrome or other Chromium based browser open **chrome://extensions/** page and enable developer mode toggle. Then click **Load unpacked extension** and select the folder where you unpacked the source files and the extension should load successfully.
 3. Another option is hosting the source files with a localhost server.
-4. There is also an [Android package](https://github.com/surenenfiajyan/files/find/main), make sure you have enabled "Unknown sources" on your Android device.
+4. There is also an [Android package](https://raw.githubusercontent.com/surenenfiajyan/files/main/GuessColor.apk), make sure you have enabled "Unknown sources" on your Android device.
