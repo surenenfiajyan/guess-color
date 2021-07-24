@@ -91,6 +91,21 @@ export class GuessColorsGame {
 
 			menuEl.onclick = (ev) => {
 				const optionButton = ev.target.closest('.option');
+
+				if (ev.currentTarget.clientWidth < 110) {
+					const colorElement = ev.target.closest('.color');
+					const x = ev.pageX;
+					const y = ev.pageY;
+
+					setTimeout(() => {
+						const elementUnderPointer = document.elementFromPoint(x, y);
+
+						if (elementUnderPointer !== colorElement) {
+							elementUnderPointer?.click();
+						}
+					}, 50);
+				}
+
 				ev.currentTarget.close(optionButton?.dataset.color ?? '');
 				ev.stopPropagation();
 			}
