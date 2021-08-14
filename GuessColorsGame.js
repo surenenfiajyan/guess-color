@@ -91,8 +91,9 @@ export class GuessColorsGame {
 
 			menuEl.onclick = (ev) => {
 				const optionButton = ev.target.closest('.option');
+				const selectedColor = optionButton?.dataset.color ?? '';
 
-				if (ev.currentTarget.clientWidth < 110) {
+				if (!selectedColor && ev.currentTarget.clientWidth < 110) {
 					const colorElement = ev.target.closest('.color');
 					const x = ev.pageX;
 					const y = ev.pageY;
@@ -106,7 +107,7 @@ export class GuessColorsGame {
 					}, 50);
 				}
 
-				ev.currentTarget.close(optionButton?.dataset.color ?? '');
+				ev.currentTarget.close(selectedColor);
 				ev.stopPropagation();
 			}
 
