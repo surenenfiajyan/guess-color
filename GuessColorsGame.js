@@ -156,10 +156,9 @@ export class GuessColorsGame {
 
 				menuEl.appendChild(optionEl);
 			}
-
-			this._initDrag();
 		});
 
+		this._initDrag();
 		this._newGame();
 	}
 
