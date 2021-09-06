@@ -7,3 +7,5 @@ This game is designed for Chrome and Chromium based browsers and it won't run no
 2. If you want to run locally, download the source code and unpack in some folder. On Chrome or other Chromium based browser open **chrome://extensions/** page and enable developer mode toggle. Then click **Load unpacked extension** and select the folder where you unpacked the source files and the extension should load successfully.
 3. Another option is hosting the source files with a localhost server.
 4. There is also an [Android app](https://raw.githubusercontent.com/surenenfiajyan/files/main/GuessColor.apk), make sure you have enabled "Unknown sources" on your Android device.
+## License
+[MIT license](https://github.com/surenenfiajyan/guess-color/blob/main/LICENSE)
