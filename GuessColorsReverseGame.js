@@ -1,15 +1,15 @@
 export class GuessColorsReverseGame {
-	_variantsLeft = [];
-	_allCombinationIndexes = [];
-	_allColors = [];
+	#variantsLeft = [];
+	#allCombinationIndexes = [];
+	#allColors = [];
 
 	constructor(allColors) {
-		this._allColors = [...allColors];
-		this._init();
+		this.#allColors = [...allColors];
+		this.#init();
 	}
 
-	_init() {
-		const allColorIndexes = this._allColors.map((color, index) => index);
+	#init() {
+		const allColorIndexes = this.#allColors.map((color, index) => index);
 
 		for (let a = 0; a < allColorIndexes.length; ++a) {
 			[allColorIndexes[0], allColorIndexes[a]] = [allColorIndexes[a], allColorIndexes[0]];
@@ -22,7 +22,7 @@ export class GuessColorsReverseGame {
 
 					for (let d = 3; d < allColorIndexes.length; ++d) {
 						[allColorIndexes[3], allColorIndexes[d]] = [allColorIndexes[d], allColorIndexes[3]];
-						this._allCombinationIndexes.push([allColorIndexes[0], allColorIndexes[1], allColorIndexes[2], allColorIndexes[3]]);
+						this.#allCombinationIndexes.push([allColorIndexes[0], allColorIndexes[1], allColorIndexes[2], allColorIndexes[3]]);
 						[allColorIndexes[3], allColorIndexes[d]] = [allColorIndexes[d], allColorIndexes[3]];
 					}
 
@@ -37,23 +37,23 @@ export class GuessColorsReverseGame {
 	}
 
 	newGame() {
-		this._variantsLeft = [...this._allCombinationIndexes];
-		this._allColors.sort(() => Math.random() - 0.5);
+		this.#variantsLeft = [...this.#allCombinationIndexes];
+		this.#allColors.sort(() => Math.random() - 0.5);
 		console.log('%c____________________________Starting new game_______________________________',
 					'font-size: 20px; font-weight: bold;');
-		console.log('Total variants: %c' + this._variantsLeft.length, 'font-size: 20px; font-weight: bold;');
+		console.log('Total variants: %c' + this.#variantsLeft.length, 'font-size: 20px; font-weight: bold;');
 	}
 
 	get guessedColors() {
-		return this._variantsLeft[0] ? this._variantsLeft[0].map((colorIndex) => this._allColors[colorIndex]) : [];
+		return this.#variantsLeft[0] ? this.#variantsLeft[0].map((colorIndex) => this.#allColors[colorIndex]) : [];
 	}
 
 	get guessed() {
-		return this._variantsLeft.length === 1;
+		return this.#variantsLeft.length === 1;
 	}
 
 	get error() {
-		return !this._variantsLeft.length;
+		return !this.#variantsLeft.length;
 	}
 
 	hint(guessedColors, coorectPos, incorrectPos) {
@@ -71,8 +71,8 @@ export class GuessColorsReverseGame {
 					'',
 					'color: blue;',
 					'color: blue; font-size: 20px; font-weight: bold;');
-		guessedColors = guessedColors.map(color => this._allColors.indexOf(color));
-		this._variantsLeft = this._variantsLeft.filter((possibleColors, index) => {
+		guessedColors = guessedColors.map(color => this.#allColors.indexOf(color));
+		this.#variantsLeft = this.#variantsLeft.filter((possibleColors, index) => {
 			let exactMatches = 0;
 			let nonExactMatches = 0;
 
@@ -87,15 +87,15 @@ export class GuessColorsReverseGame {
 			return exactMatches === coorectPos && nonExactMatches === incorrectPos;
 		});
 
-		if (this._variantsLeft.length) {
-			const randomIndex = Math.floor(Math.random() * this._variantsLeft.length);
-			[this._variantsLeft[0], this._variantsLeft[randomIndex]] = [this._variantsLeft[randomIndex], this._variantsLeft[0]];
+		if (this.#variantsLeft.length) {
+			const randomIndex = Math.floor(Math.random() * this.#variantsLeft.length);
+			[this.#variantsLeft[0], this.#variantsLeft[randomIndex]] = [this.#variantsLeft[randomIndex], this.#variantsLeft[0]];
 		}
 
-		console.log('Variants left after the hint: %c' + this._variantsLeft.length,
+		console.log('Variants left after the hint: %c' + this.#variantsLeft.length,
 					'font-size: 20px; font-weight: bold;' + (
-						this._variantsLeft.length <= 1 ?
-							`color: ${this._variantsLeft.length === 0 ? 'red' : 'green'}` :
+						this.#variantsLeft.length <= 1 ?
+							`color: ${this.#variantsLeft.length === 0 ? 'red' : 'green'}` :
 							''
 						)
 					);
