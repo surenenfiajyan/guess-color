@@ -41,6 +41,9 @@ export class GuessColorsGame {
 			this.#allColors = allColors;
 			this.#allowRepeatingColors = allowRepeat;
 			this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
+			this.#bestNumberOfAttempts = 0;
+			this.#allAttempts = 0;
+			this.#gamesWon = 0;
 			this.#setColorOptions();
 			this.#newGame();
 		});
