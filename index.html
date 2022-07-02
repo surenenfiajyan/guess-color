@@ -15,6 +15,7 @@
 				<option value="normal" selected>Normal game</option>
 				<option value="reverse">Reverse game</option>
 			</select>
+			<button title="Settings" id="settings">&#9881;</button>
 			<span class="message statistics" id="gameStatistics">
 				Games played: <span id="gamesPlayed">0</span><br>
 				Average number of guesses: <span id="averageGuesses"></span><br>
@@ -39,7 +40,7 @@
 			<h2 id="normalGameTitle">Guess the colors with as few attempts as possible.</h2>
 			<h2 id="reverseGameTitle">This is the reverse game where the computer guesses your colors.
 				Remember or write anywhere any 4 different colors from the list and let the computer to guess them by providing correct hints.
-				This is the list of valid colors:<em></em>.</h2>
+				This is the list of valid colors: <em></em>.</h2>
 			<div id="attemptedColorsContainer">
 			</div>
 			<div class="colors-row" id="colorsToSelect">
@@ -66,10 +67,17 @@
 			<button class="try" id="guessColors"></button>
 			<button class="try" id="guessColorsForMe">Show me a good step (counts as 5 attempts!)</button>
 		</main>
-		<dialog id="victoryPopup">
+		<dialog class="popup" id="victoryPopup">
 			<form method="dialog">
 				<span class="message victory" id="victoryMessage"></span>
-				<button class="victory-btn" type="submit">Start a new game</button>
+				<button type="submit">Start a new game</button>
+			</form>
+		</dialog>
+		<dialog class="popup" id="settingsPopup">
+			<form method="dialog">
+				<div class="settings-form"></div>
+				<button class="save-btn" type="submit" value="save">Save and start new game</button>
+				<button class="cancel-btn" type="submit" value="cancel">Cancel</button>
 			</form>
 		</dialog>
 	</body>

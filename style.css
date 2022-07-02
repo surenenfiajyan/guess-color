@@ -1,3 +1,7 @@
+* {
+	font-family: arial !important;
+}
+
 header {
 	text-align: center;
 	position: sticky;
@@ -152,7 +156,8 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	background-color: blue;
 }
 
-#newGame, #gameType {
+#newGame, #gameType, #settings {
+	vertical-align: top;
 	height: 40px;
 }
 
@@ -163,6 +168,12 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 
 #newGame {
 	border-radius: 4px 0 0 4px;
+}
+
+#settings {
+	border-radius: 4px;
+	font-size: 30px;
+    line-height: 26px;
 }
 
 #gameType {
@@ -176,6 +187,21 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 }
 
 @media screen and (min-width: 769px) {
+	.color-setting {
+		width: 33.33%;
+		height: 30px;
+		line-height: 30px;
+	}
+
+	.color-setting.nowrap {
+		width: 60%;
+	}
+
+	.color-setting .checkbox {
+		width: 20px;
+		height: 20px;
+	}
+	
 	.colors-row .color dialog {
 		width: 100px;
 		border: 1px solid black;
@@ -194,11 +220,34 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 }
 
 @media screen and (max-width: 768px) {
+	.color-setting {
+		width: 50%;
+		height: 50px;
+		line-height: 50px;
+	}
+
+	.color-setting .checkbox {
+		width: 40px;
+		height: 40px;
+	}
+
+	.color-setting.nowrap {
+		width: 100%;
+	}
+
+	.save-btn, .cancel-btn {
+		width: 100%;
+	}
+
+	.cancel-btn {
+		margin-top: 20px;
+	}
+
 	button {
 		padding: 20px;
 	}
 
-	#newGame, #gameType {
+	#newGame, #gameType, #settings {
 		height: 70px;
 	}
 
@@ -220,7 +269,7 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	}
 }
 
-#victoryPopup {
+.popup {
 	padding: 20px 40px;
 	box-sizing: border-box;
 	border: 2px solid yellow;
@@ -231,7 +280,7 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	text-align: center;
 }
 
-#victoryPopup::backdrop {
+.popup::backdrop {
 	background: repeating-linear-gradient(
 		135deg,
 		black,
@@ -241,7 +290,59 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	opacity: 0.6;
 }
 
-#victoryPopup .colors-row {
+.popup .colors-row {
 	pointer-events: none;
 	margin-top: 25px;
 }
+
+.settings-form {
+	font-size: 15px;
+    font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.settings-form fieldset{
+	text-align: left;
+	margin: 0 0 10px 0;
+}
+
+.color-setting {
+	cursor: pointer;
+	display: inline-block;
+}
+
+.color-setting .checkbox {
+	display: inline-block;
+	border: 2px solid black;
+	border-radius: 3px;
+	vertical-align: middle;
+	margin-right: 10px;
+}
+
+.color-setting input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.color-setting input:disabled + .checkbox {
+	opacity: 0.4;
+}
+
+.color-setting input:focus + .checkbox {
+	border-color: darkgreen;
+	outline: 2px solid darkgreen;
+}
+
+.color-setting input:checked + .checkbox::after {
+	content: "";
+	display: block;
+	background-color: black;
+	width: 60%;
+	height: 60%;
+	margin: 20%;
+	border-radius: 3px;
+}
+

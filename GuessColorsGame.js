@@ -1,14 +1,18 @@
+import { CompareUtil } from './CompareUtil.js';
 import { GuessColorsReverseGame } from './GuessColorsReverseGame.js'
+import { SettingsPopup } from './SettingsPopup.js'
 
 export class GuessColorsGame {
 	#bestNumberOfAttempts = 0;
 	#allAttempts = 0;
 	#currentNumberOfAttempts = 0;
 	#gamesWon = 0;
-	#allColors = ['red', 'green', 'blue', 'yellow', 'pink', 'indigo', 'aqua', 'orange', 'brown', 'black'];
+	#possibleColors = ['red', 'green', 'blue', 'yellow', 'pink', 'indigo', 'aqua', 'orange', 'brown', 'black'];
+	#allColors = [...this.#possibleColors];
 	#colorsToGuess = [];
 	#selectedColors = [];
 	#currentGameType = 'normal';
+	#allowRepeatingColors = false;
 
 	// elements
 	#newGameButton = document.getElementById('newGame');
@@ -33,6 +37,14 @@ export class GuessColorsGame {
 	#reverseGame = new GuessColorsReverseGame(this.#allColors);
 
 	constructor() {
+		new SettingsPopup(this.#possibleColors, this.#allColors, this.#allowRepeatingColors, (allColors, allowRepeat) => {
+			this.#allColors = allColors;
+			this.#allowRepeatingColors = allowRepeat;
+			this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
+			this.#setColorOptions();
+			this.#newGame();
+		});
+
 		this.#newGameButton.onclick = this.#victoryPopup.onclose = () => {
 			this.#newGame();
 		}
@@ -64,7 +76,7 @@ export class GuessColorsGame {
 		}
 
 		this.#colorsToSelectContainer.appendChild(document.importNode(this.#colorsTemplate.content, true));
-		this.#colorsToSelectContainer.querySelectorAll('dialog').forEach((menuEl, i) => {
+		this.#colorsToSelectContainer.querySelectorAll('dialog').forEach((menuEl) => {
 			menuEl.parentElement.onclick = menuEl.parentElement.onkeydown = (ev) => {
 				if (ev.type === 'click' || ev.type === 'keydown' && (['ArrowUp', 'ArrowDown', 'Enter', 'Spacebar', ' '].includes(ev.key))) {
 					const modalEl = ev.currentTarget.firstElementChild;
@@ -121,18 +133,21 @@ export class GuessColorsGame {
 					ev.target.parentElement.focus();
 				}
 			}
+		});
+
+		this.#setColorOptions();
+		this.#initDrag();
+		this.#newGame();
+	}
+
+	#setColorOptions() {
+		this.#reverseGameTitle.querySelector('em').innerHTML = this.#allColors.map(color => `<span style="color: ${color}">${color[0].toUpperCase() + color.substring(1)}</span>`).join(', ');
+
+		this.#colorsToSelectContainer.querySelectorAll('dialog').forEach(menuEl => {
+			menuEl.replaceChildren();
 
 			for (const color of this.#allColors) {
 				const optionEl = document.createElement('button');
-
-				if (i === 0) {
-					const colorText = document.createElement('span');
-					colorText.style.color = color;
-					colorText.innerText = color[0].toUpperCase() + color.substring(1);
-					this.#reverseGameTitle.lastElementChild.innerHTML += this.#reverseGameTitle.lastElementChild.children.length ? ', ' : ' ';
-					this.#reverseGameTitle.lastElementChild.appendChild(colorText);
-				}
-
 				optionEl.className = 'option';
 				optionEl.dataset.color = color;
 				optionEl.style.setProperty('--color', color);
@@ -157,9 +172,6 @@ export class GuessColorsGame {
 				menuEl.appendChild(optionEl);
 			}
 		});
-
-		this.#initDrag();
-		this.#newGame();
 	}
 
 	#initDrag() {
@@ -320,7 +332,16 @@ export class GuessColorsGame {
 			});
 
 			this.#allColors.sort(() => Math.random() - 0.5);
-			this.#colorsToGuess = this.#allColors.slice(0, 4);
+
+			if (this.#allowRepeatingColors) {
+				this.#colorsToGuess = [];
+
+				for (let i = 0; i < 4; ++i) {
+					this.#colorsToGuess.push(this.#allColors[Math.floor(Math.random() * this.#allColors.length)]);
+				}
+			} else {
+				this.#colorsToGuess = this.#allColors.slice(0, 4);
+			}
 		} else {
 			this.#tryColorsForMe();
 		}
@@ -344,7 +365,7 @@ export class GuessColorsGame {
 		if (this.#selectedColors.length < 4) {
 			message += "Please select all colors";
 		} else {
-			if (this.#selectedColors.find((color, i, arr) => i !== arr.indexOf(color))) {
+			if (!this.#allowRepeatingColors && this.#selectedColors.find((color, i, arr) => i !== arr.indexOf(color))) {
 				message += "The colors shouldn't repeat";
 			}
 		}
@@ -353,34 +374,24 @@ export class GuessColorsGame {
 	}
 
 	#getComparisonMessage() {
-		let correctColors = 0;
-		let correctColorsInCorrectPosition = 0;
-
-		for (let i = 0; i < 4; ++i) {
-			if (this.#selectedColors[i] === this.#colorsToGuess[i]) {
-				++correctColorsInCorrectPosition;
-			} else if (this.#colorsToGuess.includes(this.#selectedColors[i])){
-				++correctColors;
-			}
-		}
-
+		const { exactMatches, nonExactMatches } = CompareUtil.getComparisonData(this.#selectedColors, this.#colorsToGuess);
 		let message = '';
 
-		if (correctColorsInCorrectPosition !== 4) {
-			if (!correctColors && !correctColorsInCorrectPosition) {
+		if (exactMatches !== 4) {
+			if (!nonExactMatches && !exactMatches) {
 				message += `<span class="group">There is not even a correct color</span>`;
 			} else {
-				if (correctColorsInCorrectPosition) {
-					message += `<span class="group correct">Correct colors and correct positions: ${correctColorsInCorrectPosition}</span>`;
+				if (exactMatches) {
+					message += `<span class="group correct">Correct colors and correct positions: ${exactMatches}</span>`;
 				}
 
-				if (correctColors) {
-					message += `<span class="group">Correct colors but wrong positions: ${correctColors}</span>`;
+				if (nonExactMatches) {
+					message += `<span class="group">Correct colors but wrong positions: ${nonExactMatches}</span>`;
 				}
 			}
 		}
 
-		this.#reverseGame.hint(this.#selectedColors, correctColorsInCorrectPosition, correctColors);
+		this.#reverseGame.hint(this.#selectedColors, exactMatches, nonExactMatches);
 		return message;
 	}
 
@@ -437,7 +448,7 @@ export class GuessColorsGame {
 
 		this.#victoryPopupMessage.innerText = error ? 'Looks like there is an error in the hints' :
 			`${this.#currentGameType === 'normal' ? 'Congratulations, you' : 'I'} guessed the colors in ${this.#currentNumberOfAttempts > 1 ?
-			(this.#currentNumberOfAttempts + ' attempts') : 'one attempt'}!!!`;
+				(this.#currentNumberOfAttempts + ' attempts') : 'one attempt'}!!!`;
 
 		if (this.#currentGameType === 'reverse' && !error) {
 			this.#victoryPopupMessage.innerHTML += this.#attemptedColorsContainer.lastElementChild.outerHTML;

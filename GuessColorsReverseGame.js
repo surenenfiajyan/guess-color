@@ -1,38 +1,28 @@
+import { CompareUtil } from "./CompareUtil.js";
+
 export class GuessColorsReverseGame {
 	#variantsLeft = [];
 	#allCombinationIndexes = [];
 	#allColors = [];
+	#allowRepeat = false;
 
-	constructor(allColors) {
+	constructor(allColors, allowRepeat = false) {
 		this.#allColors = [...allColors];
+		this.#allowRepeat = allowRepeat;
 		this.#init();
 	}
 
 	#init() {
-		const allColorIndexes = this.#allColors.map((color, index) => index);
-
-		for (let a = 0; a < allColorIndexes.length; ++a) {
-			[allColorIndexes[0], allColorIndexes[a]] = [allColorIndexes[a], allColorIndexes[0]];
-
-			for (let b = 1; b < allColorIndexes.length; ++b) {
-				[allColorIndexes[1], allColorIndexes[b]] = [allColorIndexes[b], allColorIndexes[1]];
-
-				for (let c = 2; c < allColorIndexes.length; ++c) {
-					[allColorIndexes[2], allColorIndexes[c]] = [allColorIndexes[c], allColorIndexes[2]];
-
-					for (let d = 3; d < allColorIndexes.length; ++d) {
-						[allColorIndexes[3], allColorIndexes[d]] = [allColorIndexes[d], allColorIndexes[3]];
-						this.#allCombinationIndexes.push([allColorIndexes[0], allColorIndexes[1], allColorIndexes[2], allColorIndexes[3]]);
-						[allColorIndexes[3], allColorIndexes[d]] = [allColorIndexes[d], allColorIndexes[3]];
+		for (let a = 0; a < this.#allColors.length; ++a) {
+			for (let b = 0; b < this.#allColors.length; ++b) {
+				for (let c = 0; c < this.#allColors.length; ++c) {
+					for (let d = 0; d < this.#allColors.length; ++d) {
+						if (this.#allowRepeat || (new Set([a, b, c, d])).size === 4) {
+							this.#allCombinationIndexes.push([a, b, c, d]);
+						}
 					}
-
-					[allColorIndexes[2], allColorIndexes[c]] = [allColorIndexes[c], allColorIndexes[2]];
 				}
-
-				[allColorIndexes[1], allColorIndexes[b]] = [allColorIndexes[b], allColorIndexes[1]];
 			}
-
-			[allColorIndexes[0], allColorIndexes[a]] = [allColorIndexes[a], allColorIndexes[0]];
 		}
 	}
 
@@ -72,18 +62,8 @@ export class GuessColorsReverseGame {
 					'color: blue;',
 					'color: blue; font-size: 20px; font-weight: bold;');
 		guessedColors = guessedColors.map(color => this.#allColors.indexOf(color));
-		this.#variantsLeft = this.#variantsLeft.filter((possibleColors, index) => {
-			let exactMatches = 0;
-			let nonExactMatches = 0;
-
-			for (let i = 0; i < 4; ++i) {
-				if (guessedColors[i] === possibleColors[i]) {
-					++exactMatches;
-				} else if (possibleColors.includes(guessedColors[i])) {
-					++nonExactMatches;
-				}
-			}
-
+		this.#variantsLeft = this.#variantsLeft.filter((possibleColors) => {
+			const { exactMatches, nonExactMatches } = CompareUtil.getComparisonData(guessedColors, possibleColors);
 			return exactMatches === coorectPos && nonExactMatches === incorrectPos;
 		});
 
