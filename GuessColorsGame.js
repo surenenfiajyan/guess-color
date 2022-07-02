@@ -31,6 +31,7 @@ export class GuessColorsGame {
 	#bestNumberOfAttemptsText = document.getElementById('bestNumberOfGuesses');
 	#normalGameTitle = document.getElementById('normalGameTitle');
 	#reverseGameTitle = document.getElementById('reverseGameTitle');
+	#reverseGameUniqueWord = document.getElementById('reverseGameUniqueWord');
 	#colorsTemplate = document.getElementById('colorsTemplate');
 
 	// reverse game class
@@ -44,6 +45,7 @@ export class GuessColorsGame {
 			this.#bestNumberOfAttempts = 0;
 			this.#allAttempts = 0;
 			this.#gamesWon = 0;
+			this.#reverseGameUniqueWord.style.display = this.#allowRepeatingColors ? 'none' : '';
 			this.#setColorOptions();
 			this.#newGame();
 		});
