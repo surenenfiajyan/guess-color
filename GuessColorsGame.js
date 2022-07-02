@@ -45,6 +45,7 @@ export class GuessColorsGame {
 			this.#bestNumberOfAttempts = 0;
 			this.#allAttempts = 0;
 			this.#gamesWon = 0;
+			this.#bestNumberOfAttemptsText.innerText = this.#gamesPlayedText.innerText = '--';
 			this.#reverseGameUniqueWord.style.display = this.#allowRepeatingColors ? 'none' : '';
 			this.#setColorOptions();
 			this.#newGame();
