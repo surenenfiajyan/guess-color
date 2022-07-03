@@ -39,12 +39,6 @@ export class GuessColorsGame {
 	#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
 
 	constructor() {
-		window.addEventListener('unload', () => {
-			StorageUtil.saveGamesWon(this.#gamesWon);
-			StorageUtil.saveTotalAttempts(this.#allAttempts);
-			StorageUtil.saveBestAttempts(this.#bestNumberOfAttempts);
-		});
-
 		new SettingsPopup(this.#possibleColors, this.#allColors, this.#allowRepeatingColors, (allColors, allowRepeat) => {
 			this.#allColors = allColors;
 			this.#allowRepeatingColors = allowRepeat;
@@ -472,6 +466,9 @@ export class GuessColorsGame {
 				this.#currentNumberOfAttempts;
 			this.#allAttempts += this.#currentNumberOfAttempts;
 			++this.#gamesWon;
+			StorageUtil.saveGamesWon(this.#gamesWon);
+			StorageUtil.saveTotalAttempts(this.#allAttempts);
+			StorageUtil.saveBestAttempts(this.#bestNumberOfAttempts);
 		}
 
 		this.#victoryPopupMessage.innerText = error ? 'Looks like there is an error in the hints' :
