@@ -48,6 +48,9 @@ export class GuessColorsGame {
 			this.#bestNumberOfAttempts = 0;
 			this.#allAttempts = 0;
 			this.#gamesWon = 0;
+			StorageUtil.saveGamesWon(this.#gamesWon);
+			StorageUtil.saveTotalAttempts(this.#allAttempts);
+			StorageUtil.saveBestAttempts(this.#bestNumberOfAttempts);
 			this.#updateDisplayedGameStatistics();
 			this.#reverseGameUniqueWord.style.display = this.#allowRepeatingColors ? 'none' : '';
 			this.#setColorOptions();
