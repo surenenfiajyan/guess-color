@@ -95,7 +95,7 @@ export class GuessColorsGame {
 					const modalEl = ev.currentTarget.firstElementChild;
 
 					if (!modalEl.open) {
-						modalEl.style.top = ev.currentTarget.offsetTop - 150 + 'px';
+						modalEl.style.top = ev.currentTarget.offsetTop + 35 - 15 * this.#allColors.length + 'px';
 						modalEl.style.left = `calc(${ev.currentTarget.offsetLeft - window.innerWidth / 2}px + 50vw)`;
 						modalEl.showModal();
 						(modalEl.querySelector(`button[data-color="${ev.currentTarget.style.background}"]`) ?? modalEl.firstElementChild).focus();
