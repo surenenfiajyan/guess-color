@@ -39,23 +39,7 @@ export class GuessColorsGame {
 	#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
 
 	constructor() {
-		new SettingsPopup(this.#possibleColors, this.#allColors, this.#allowRepeatingColors, (allColors, allowRepeat) => {
-			this.#allColors = allColors;
-			this.#allowRepeatingColors = allowRepeat;
-			StorageUtil.saveAvailableColors(allColors);
-			StorageUtil.saveAllowDuplicates(allowRepeat);
-			this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
-			this.#bestNumberOfAttempts = 0;
-			this.#allAttempts = 0;
-			this.#gamesWon = 0;
-			StorageUtil.saveGamesWon(this.#gamesWon);
-			StorageUtil.saveTotalAttempts(this.#allAttempts);
-			StorageUtil.saveBestAttempts(this.#bestNumberOfAttempts);
-			this.#updateDisplayedGameStatistics();
-			this.#reverseGameUniqueWord.style.display = this.#allowRepeatingColors ? 'none' : '';
-			this.#setColorOptions();
-			this.#newGame();
-		});
+		this.#initSettingsPopup();
 
 		this.#newGameButton.onclick = this.#victoryPopup.onclose = () => {
 			this.#newGame();
@@ -92,6 +76,34 @@ export class GuessColorsGame {
 		this.#gameTypeSwitch.dispatchEvent(new Event('change'));
 
 		this.#colorsToSelectContainer.appendChild(document.importNode(this.#colorsTemplate.content, true));
+
+		this.#initMenus();
+		this.#setColorOptions();
+		this.#initDrag();
+		this.#newGame();
+	}
+
+	#initSettingsPopup() {
+		new SettingsPopup(this.#possibleColors, this.#allColors, this.#allowRepeatingColors, (allColors, allowRepeat) => {
+			this.#allColors = allColors;
+			this.#allowRepeatingColors = allowRepeat;
+			StorageUtil.saveAvailableColors(allColors);
+			StorageUtil.saveAllowDuplicates(allowRepeat);
+			this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors);
+			this.#bestNumberOfAttempts = 0;
+			this.#allAttempts = 0;
+			this.#gamesWon = 0;
+			StorageUtil.saveGamesWon(this.#gamesWon);
+			StorageUtil.saveTotalAttempts(this.#allAttempts);
+			StorageUtil.saveBestAttempts(this.#bestNumberOfAttempts);
+			this.#updateDisplayedGameStatistics();
+			this.#reverseGameUniqueWord.style.display = this.#allowRepeatingColors ? 'none' : '';
+			this.#setColorOptions();
+			this.#newGame();
+		});
+	}
+
+	#initMenus() {
 		this.#colorsToSelectContainer.querySelectorAll('dialog').forEach((menuEl) => {
 			menuEl.parentElement.onclick = menuEl.parentElement.onkeydown = (ev) => {
 				if (ev.type === 'click' || ev.type === 'keydown' && (['ArrowUp', 'ArrowDown', 'Enter', 'Spacebar', ' '].includes(ev.key))) {
@@ -150,10 +162,6 @@ export class GuessColorsGame {
 				}
 			}
 		});
-
-		this.#setColorOptions();
-		this.#initDrag();
-		this.#newGame();
 	}
 
 	#setColorOptions() {
