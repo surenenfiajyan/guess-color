@@ -13,6 +13,7 @@ export class SettingsPopup {
 		this.#updateCallback = updateCallback;
 
 		this.#settingsButton.onclick = () => {
+			this.#settingsPopup.returnValue = '';
 			let html = '<fieldset>';
 			html += '<legend align="center">Use colors:</legend>';
 			html += this.#possibleColors.map(color => `<label class="color-setting" style="color: ${color}"><input name="color" value="${color}" type="checkbox" ${this.#allColors.includes(color) ? 'checked' : ''}><span class="checkbox"></span>${color[0].toUpperCase() + color.substring(1)}</label>`).join('');
