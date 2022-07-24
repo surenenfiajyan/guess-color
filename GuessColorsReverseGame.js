@@ -5,23 +5,29 @@ export class GuessColorsReverseGame {
 	#allCombinationIndexes = [];
 	#allColors = [];
 	#allowRepeat = false;
+	#colorsCount = 4;
 
-	constructor(allColors, allowRepeat = false) {
+	constructor(allColors, allowRepeat = false, colorsCount = 4) {
 		this.#allColors = [...allColors];
 		this.#allowRepeat = allowRepeat;
+		this.#colorsCount = colorsCount;
 		this.#init();
 	}
 
 	#init() {
-		for (let a = 0; a < this.#allColors.length; ++a) {
-			for (let b = 0; b < this.#allColors.length; ++b) {
-				for (let c = 0; c < this.#allColors.length; ++c) {
-					for (let d = 0; d < this.#allColors.length; ++d) {
-						if (this.#allowRepeat || (new Set([a, b, c, d])).size === 4) {
-							this.#allCombinationIndexes.push([a, b, c, d]);
-						}
-					}
-				}
+		const allCombinations = this.#allColors.length ** this.#colorsCount;
+
+		for (let i = 0; i < allCombinations; ++i) {
+			const combinationIndexes = [];
+
+			for (let j = this.#colorsCount, num = i; j >= 1; --j) {
+				const reminder = num % this.#allColors.length;
+				combinationIndexes.push(reminder);
+				num = (num - reminder) / this.#allColors.length;
+			}
+
+			if (this.#allowRepeat || (new Set(combinationIndexes)).size === this.#colorsCount) {
+				this.#allCombinationIndexes.push(combinationIndexes);
 			}
 		}
 	}

@@ -5,6 +5,7 @@ export class StorageUtil {
 	static #GAMES_WON_KEY = 'gamesWon';
 	static #TOTAL_ATTEMPTS_KEY = 'totalAttempts';
 	static #BEST_ATTEMPTS_KEY = 'bestAttempts';
+	static #COLORS_COUNT_KEY = 'colorsCount';
 
 	static saveAvailableColors(colors) {
 		this.#saveData(this.#AVAILABLE_COLORS_KEY, colors);
@@ -52,6 +53,14 @@ export class StorageUtil {
 
 	static getBestAttempts(defaultBestAttempts = 0) {
 		return this.#getData(this.#BEST_ATTEMPTS_KEY, defaultBestAttempts);
+	}
+
+	static saveColorsCount(colorsCount) {
+		this.#saveData(this.#COLORS_COUNT_KEY, colorsCount);
+	}
+
+	static getColorsCount(defaultColorsCount = 4) {
+		return this.#getData(this.#COLORS_COUNT_KEY, defaultColorsCount);
 	}
 
 	static #saveData(key, value) {

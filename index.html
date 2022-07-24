@@ -27,19 +27,10 @@
 				<div class="color" tabindex="0" draggable="true">
 					<dialog></dialog>
 				</div>
-				<div class="color" tabindex="0" draggable="true">
-					<dialog></dialog>
-				</div>
-				<div class="color" tabindex="0" draggable="true">
-					<dialog></dialog>
-				</div>
-				<div class="color" tabindex="0" draggable="true">
-					<dialog></dialog>
-				</div>
 			</template>
 			<h2 id="normalGameTitle">Guess the colors with as few attempts as possible.</h2>
 			<h2 id="reverseGameTitle">This is the reverse game where the computer guesses your colors.
-				Remember or write anywhere any 4<span id="reverseGameUniqueWord"> different</span> colors from the list and let the computer to guess them by providing correct hints.
+				Remember or write anywhere any <span id="colorsNumber"></span><span id="reverseGameUniqueWord"> different</span> colors from the list and let the computer to guess them by providing correct hints.
 				This is the list of valid colors: <em></em>.</h2>
 			<div id="attemptedColorsContainer">
 			</div>
@@ -48,19 +39,9 @@
 			<div class="colors-row" id="colorHintsToSelect">
 				<span class="message hint group correct">Correct colors in correct position:</span>
 				<select>
-					<option value="0">None</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
 				</select>
 				<span class="message hint group">Correct colors in non correct position:</span>
 				<select>
-					<option value="0">None</option>
-					<option value="1">1</option>
-					<option value="2">2</option>
-					<option value="3">3</option>
-					<option value="4">4</option>
 				</select>
 			</div>
 			<span class="message error" id="errorMessage"></span>
