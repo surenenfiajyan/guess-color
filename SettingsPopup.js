@@ -53,7 +53,7 @@ export class SettingsPopup {
 	#enableDisableControls() {
 		const selectedColors = this.#settingsPopup.querySelectorAll('[name="color"]:checked');
 		selectedColors.forEach((checkbox, i, arr) =>
-			checkbox.disabled = arr.length <= +this.#settingsPopup.querySelector('[name="count"]:checked').value);
+			checkbox.disabled = arr.length <= +this.#settingsPopup.querySelector('[name="count"]:checked')?.value);
 		this.#settingsPopup.querySelectorAll('[name="count"]').forEach((el) => el.disabled = +el.value > selectedColors.length);
 	}
 }
