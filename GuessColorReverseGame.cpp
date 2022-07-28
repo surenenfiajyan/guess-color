@@ -17,6 +17,7 @@ extern "C"
 	extern void growMem(unsigned size);
 	extern void transferData(unsigned variantsLeft, unsigned colorIndex, unsigned position);
 	extern int getRandomNumber(int number);
+	extern void debugPrint(int number);
 }
 
 static void *allocate(unsigned long size)
@@ -74,7 +75,7 @@ extern "C"
 		for (int i = 0; i < combinationsLeft; ++i)
 		{
 			int exactMatches = 0, nonExactMatches = 0;
-			int aColors[16] = {}, bColors[16] = {};
+			char aColors[16] = {}, bColors[16] = {};
 
 			for (int j = 0; j < colorsCount; ++j)
 			{
@@ -90,14 +91,14 @@ extern "C"
 					aColors[a]++;
 					bColors[b]++;
 
-					if (aColors[a] && bColors[a])
+					if (bColors[a])
 					{
 						++nonExactMatches;
 						--aColors[a];
 						--bColors[a];
 					}
 
-					if (aColors[b] && bColors[b])
+					if (aColors[b])
 					{
 						++nonExactMatches;
 						--aColors[b];
@@ -142,7 +143,7 @@ extern "C"
 		allCombinationsArr = new ColorCombination[allCombinations];
 		combinationsLeftArr = new ColorCombination[allCombinations];
 
-		for (int i = 0, index = 0; i < repeatableCombinations; ++i)
+		for (int i = 0, index = 0; index < allCombinations; ++i)
 		{
 			int number = i;
 			bool duplicateMap[] = {false, false, false, false, false, false, false, false, false, false,

@@ -32,6 +32,9 @@ export class GuessColorsReverseGame {
 				},
 				getRandomNumber: (number) => {
 					return Math.floor(Math.random() * number);
+				},
+				debugPrint: (number) => {
+					console.log(number);
 				}
 			}
 		};
