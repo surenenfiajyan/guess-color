@@ -412,7 +412,7 @@ export class GuessColorsGame {
 
 		this.#colorsToSelectContainer.querySelectorAll('.color').forEach((colorEl) => {
 			if (colorEl.style.background) {
-				this.#selectedColors.push(colorEl.style.background);
+				this.#selectedColors.push(colorEl.style.backgroundColor);
 			}
 		});
 	}
