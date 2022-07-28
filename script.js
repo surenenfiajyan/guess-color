@@ -1,3 +1,7 @@
 import { GuessColorsGame } from './GuessColorsGame.js'
+import { GuessColorsReverseGame } from './GuessColorsReverseGame.js';
 
-const game = new GuessColorsGame();
+GuessColorsReverseGame.loadWasmModule().then(() => {
+	const game = new GuessColorsGame();
+});
+

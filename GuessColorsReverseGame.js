@@ -1,11 +1,11 @@
-import { CompareUtil } from "./CompareUtil.js";
-
 export class GuessColorsReverseGame {
-	#variantsLeft = [];
-	#allCombinationIndexes = [];
 	#allColors = [];
 	#allowRepeat = false;
 	#colorsCount = 4;
+	#wasmInstance = null;
+	#variantsLeft = 0;
+	#firstGuessSuggestion = [];
+	static #wasmModule;
 
 	constructor(allColors, allowRepeat = false, colorsCount = 4) {
 		this.#allColors = [...allColors];
@@ -13,77 +13,90 @@ export class GuessColorsReverseGame {
 		this.#colorsCount = colorsCount;
 		this.#init();
 	}
-
 	#init() {
-		const allCombinations = this.#allColors.length ** this.#colorsCount;
+		const memory = new WebAssembly.Memory({ initial: 2, maximum: 65536 });
+		const importObject = {
+			env: {
+				memory,
+				transferData: (variantsLeft, guessSuggestionColorIndex, position) => {
+					this.#variantsLeft = variantsLeft;
 
-		for (let i = 0; i < allCombinations; ++i) {
-			const combinationIndexes = [];
-
-			for (let j = this.#colorsCount, num = i; j >= 1; --j) {
-				const reminder = num % this.#allColors.length;
-				combinationIndexes.push(reminder);
-				num = (num - reminder) / this.#allColors.length;
+					if (variantsLeft) {
+						this.#firstGuessSuggestion[position] = this.#allColors[guessSuggestionColorIndex];
+					} else {
+						this.#firstGuessSuggestion = [];
+					}
+				},
+				growMem: (size) => {
+					memory.grow(Math.ceil(size / 65536));
+				},
+				getRandomNumber: (number) => {
+					return Math.floor(Math.random() * number);
+				}
 			}
+		};
+		this.#wasmInstance = new WebAssembly.Instance(this.constructor.#wasmModule, importObject);
+		this.#wasmInstance.exports.init(this.#colorsCount, this.#allColors.length, this.#allowRepeat);
+	}
 
-			if (this.#allowRepeat || (new Set(combinationIndexes)).size === this.#colorsCount) {
-				this.#allCombinationIndexes.push(combinationIndexes);
-			}
+	static async loadWasmModule() {
+		if (this.#wasmModule === undefined) {
+			this.#wasmModule = null;
+			const response = await fetch('./ReverseGame.wasm');
+			this.#wasmModule = new WebAssembly.Module(await response.arrayBuffer());
+		} else {
+			throw 'Loading twice';
 		}
 	}
 
 	newGame() {
-		this.#variantsLeft = [...this.#allCombinationIndexes];
+		this.#wasmInstance.exports.newGame();
 		this.#allColors.sort(() => Math.random() - 0.5);
 		console.log('%c____________________________Starting new game_______________________________',
-					'font-size: 20px; font-weight: bold;');
-		console.log('Total variants: %c' + this.#variantsLeft.length, 'font-size: 20px; font-weight: bold;');
+			'font-size: 20px; font-weight: bold;');
+		console.log('Total variants: %c' + this.#variantsLeft, 'font-size: 20px; font-weight: bold;');
+
 	}
 
 	get guessedColors() {
-		return this.#variantsLeft[0] ? this.#variantsLeft[0].map((colorIndex) => this.#allColors[colorIndex]) : [];
+		return this.#firstGuessSuggestion;
 	}
 
 	get guessed() {
-		return this.#variantsLeft.length === 1;
+		return this.#variantsLeft === 1;
 	}
 
 	get error() {
-		return !this.#variantsLeft.length;
+		return !this.#variantsLeft;
 	}
 
 	hint(guessedColors, coorectPos, incorrectPos) {
 		console.log('The hint for the colors ' + guessedColors.map(c => `%c${c}%c`).join(', ') + ':',
-					...guessedColors
-					.flatMap(
-						c => [
-							`color: ${c}; background: gray; padding: 2px; font-size: 20px; border-radius: 5px;`,
-							''
-						]));
+			...guessedColors
+				.flatMap(
+					c => [
+						`color: ${c}; background: gray; padding: 2px; font-size: 20px; border-radius: 5px;`,
+						''
+					]));
 		console.log(`%cCorrect colors in correct position: %c${coorectPos}%c, ` +
-					`%cCorrect colors in incorrect position: %c${incorrectPos}`,
-					'color: green;',
-					'color: green; font-size: 20px; font-weight: bold;',
-					'',
-					'color: blue;',
-					'color: blue; font-size: 20px; font-weight: bold;');
-		guessedColors = guessedColors.map(color => this.#allColors.indexOf(color));
-		this.#variantsLeft = this.#variantsLeft.filter((possibleColors) => {
-			const { exactMatches, nonExactMatches } = CompareUtil.getComparisonData(guessedColors, possibleColors);
-			return exactMatches === coorectPos && nonExactMatches === incorrectPos;
+			`%cCorrect colors in incorrect position: %c${incorrectPos}`,
+			'color: green;',
+			'color: green; font-size: 20px; font-weight: bold;',
+			'',
+			'color: blue;',
+			'color: blue; font-size: 20px; font-weight: bold;');
+
+		guessedColors.map(color => this.#allColors.indexOf(color)).forEach((c, i) => {
+			this.#wasmInstance.exports.transferHintFromJs(coorectPos, incorrectPos, i, c);
 		});
 
-		if (this.#variantsLeft.length) {
-			const randomIndex = Math.floor(Math.random() * this.#variantsLeft.length);
-			[this.#variantsLeft[0], this.#variantsLeft[randomIndex]] = [this.#variantsLeft[randomIndex], this.#variantsLeft[0]];
-		}
 
-		console.log('Variants left after the hint: %c' + this.#variantsLeft.length,
-					'font-size: 20px; font-weight: bold;' + (
-						this.#variantsLeft.length <= 1 ?
-							`color: ${this.#variantsLeft.length === 0 ? 'red' : 'green'}` :
-							''
-						)
-					);
+		console.log('Variants left after the hint: %c' + this.#variantsLeft,
+			'font-size: 20px; font-weight: bold;' + (
+				this.#variantsLeft <= 1 ?
+					`color: ${this.#variantsLeft === 0 ? 'red' : 'green'}` :
+					''
+			)
+		);
 	}
 }
