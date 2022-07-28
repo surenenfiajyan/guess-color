@@ -1,9 +1,12 @@
+#define MAX_PEGS 8
+#define MAX_COLORS 16
+
 static unsigned colorsCount, allColors, allCombinations, combinationsLeft;
 static bool allowDuplicates;
 
 struct ColorCombination
 {
-	char array[16];
+	char array[MAX_PEGS];
 };
 
 static ColorCombination hint;
@@ -75,7 +78,7 @@ extern "C"
 		for (int i = 0; i < combinationsLeft; ++i)
 		{
 			int exactMatches = 0, nonExactMatches = 0;
-			char aColors[16] = {}, bColors[16] = {};
+			int aColors[MAX_COLORS] = {}, bColors[MAX_COLORS] = {};
 
 			for (int j = 0; j < colorsCount; ++j)
 			{
@@ -88,21 +91,20 @@ extern "C"
 				}
 				else
 				{
-					aColors[a]++;
-					bColors[b]++;
-
 					if (bColors[a])
 					{
 						++nonExactMatches;
-						--aColors[a];
 						--bColors[a];
+					} else {
+						aColors[a]++;
 					}
 
 					if (aColors[b])
 					{
 						++nonExactMatches;
 						--aColors[b];
-						--bColors[b];
+					} else {
+						bColors[b]++;
 					}
 				}
 			}
@@ -146,8 +148,7 @@ extern "C"
 		for (int i = 0, index = 0; index < allCombinations; ++i)
 		{
 			int number = i;
-			bool duplicateMap[] = {false, false, false, false, false, false, false, false, false, false,
-								   false, false, false, false, false, false};
+			bool duplicateMap[MAX_COLORS] = {};
 			bool duplicate = false;
 
 			for (int j = 0; j < colorsCount; ++j)
