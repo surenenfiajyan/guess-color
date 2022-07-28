@@ -411,7 +411,7 @@ export class GuessColorsGame {
 		this.#selectedColors.length = 0;
 
 		this.#colorsToSelectContainer.querySelectorAll('.color').forEach((colorEl) => {
-			if (colorEl.style.background) {
+			if (colorEl.style.backgroundColor) {
 				this.#selectedColors.push(colorEl.style.backgroundColor);
 			}
 		});
