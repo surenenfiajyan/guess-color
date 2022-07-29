@@ -1,7 +1,7 @@
 #define MAX_PEGS 8
 #define MAX_COLORS 16
 
-static unsigned colorsCount, allColors, allCombinations, combinationsLeft;
+static unsigned pegsCount, allColors, allCombinations, combinationsLeft;
 static bool allowDuplicates;
 
 struct ColorCombination
@@ -33,7 +33,7 @@ static void *allocate(unsigned long size)
 
 static void transferDataToJs()
 {
-	for (int i = 0; i < colorsCount; ++i)
+	for (int i = 0; i < pegsCount; ++i)
 	{
 		transferData(combinationsLeft, combinationsLeftArr[0].array[i], i);
 	}
@@ -68,7 +68,7 @@ extern "C"
 	{
 		hint.array[colorIndex] = color;
 
-		if (colorIndex < colorsCount - 1)
+		if (colorIndex < pegsCount - 1)
 		{
 			return;
 		}
@@ -80,7 +80,7 @@ extern "C"
 			int exactMatches = 0, nonExactMatches = 0;
 			int aColors[MAX_COLORS] = {}, bColors[MAX_COLORS] = {};
 
-			for (int j = 0; j < colorsCount; ++j)
+			for (int j = 0; j < pegsCount; ++j)
 			{
 				int a = combinationsLeftArr[i].array[j];
 				int b = hint.array[j];
@@ -127,13 +127,13 @@ extern "C"
 
 	void init(unsigned colorsPerRow, unsigned totalColors, bool allowRepeats)
 	{
-		colorsCount = colorsPerRow;
-		allColors = totalColors;
+		pegsCount = colorsPerRow <= MAX_PEGS ? colorsPerRow : MAX_PEGS;
+		allColors = totalColors <= MAX_COLORS ? totalColors : MAX_COLORS;
 		allowDuplicates = allowRepeats;
 
 		int uniqueCombinations = 1, repeatableCombinations = 1;
 
-		for (int i = 0, mutiplier = allColors; i < colorsCount; ++i)
+		for (int i = 0, mutiplier = allColors; i < pegsCount; ++i)
 		{
 			repeatableCombinations *= allColors;
 			uniqueCombinations *= mutiplier;
@@ -151,7 +151,7 @@ extern "C"
 			bool duplicateMap[MAX_COLORS] = {};
 			bool duplicate = false;
 
-			for (int j = 0; j < colorsCount; ++j)
+			for (int j = 0; j < pegsCount; ++j)
 			{
 				int reminder = number % allColors;
 				allCombinationsArr[index].array[j] = reminder;
