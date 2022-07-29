@@ -95,7 +95,9 @@ extern "C"
 					{
 						++nonExactMatches;
 						--bColors[a];
-					} else {
+					}
+					else
+					{
 						aColors[a]++;
 					}
 
@@ -103,7 +105,9 @@ extern "C"
 					{
 						++nonExactMatches;
 						--aColors[b];
-					} else {
+					}
+					else
+					{
 						bColors[b]++;
 					}
 				}
