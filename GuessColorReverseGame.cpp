@@ -78,7 +78,7 @@ extern "C"
 		for (int i = 0; i < combinationsLeft; ++i)
 		{
 			int exactMatches = 0, nonExactMatches = 0;
-			int aColors[MAX_COLORS] = {}, bColors[MAX_COLORS] = {};
+			char aColors[MAX_COLORS] = {}, bColors[MAX_COLORS] = {};
 
 			for (int j = 0; j < pegsCount; ++j)
 			{
