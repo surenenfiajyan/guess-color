@@ -63,6 +63,10 @@ export class StorageUtil {
 		return this.#getData(this.#COLORS_COUNT_KEY, defaultColorsCount);
 	}
 
+	static clearData() {
+		localStorage.clear();
+	}
+
 	static #saveData(key, value) {
 		localStorage.setItem(key, JSON.stringify(value));
 	}

@@ -1,3 +1,5 @@
+import { StorageUtil } from "./StorageUtil.js";
+
 export class GuessColorsReverseGame {
 	#allColors = [];
 	#allowRepeat = false;
@@ -11,7 +13,14 @@ export class GuessColorsReverseGame {
 		this.#allColors = [...allColors];
 		this.#allowRepeat = allowRepeat;
 		this.#colorsCount = colorsCount;
-		this.#init();
+
+		try {
+			this.#init();
+		} catch (e) {
+			console.error(e);
+			StorageUtil.clearData();
+			document.location.reload();
+		}
 	}
 	#init() {
 		const memory = new WebAssembly.Memory({ initial: 2, maximum: 65536 });
