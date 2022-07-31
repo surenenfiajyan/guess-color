@@ -132,11 +132,10 @@ extern "C"
 
 		int uniqueCombinations = 1, repeatableCombinations = 1;
 
-		for (int i = 0, mutiplier = allColors; i < pegsCount; ++i)
+		for (int i = 0, mutiplier = allColors; i < pegsCount; ++i, --mutiplier)
 		{
 			repeatableCombinations *= allColors;
 			uniqueCombinations *= mutiplier;
-			--mutiplier;
 		}
 
 		allCombinations = allowRepeats ? repeatableCombinations : uniqueCombinations;
@@ -144,24 +143,38 @@ extern "C"
 		allCombinationsArr = new ColorCombination[allCombinations];
 		combinationsLeftArr = new ColorCombination[allCombinations];
 
-		for (int i = 0, index = 0; index < allCombinations; ++i)
+		if (allowRepeats)
 		{
-			int number = i;
-			bool duplicateMap[MAX_COLORS] = {};
-			bool duplicate = false;
-
-			for (int j = 0; j < pegsCount; ++j)
+			for (int i = 0; i < allCombinations; ++i)
 			{
-				int reminder = number % allColors;
-				allCombinationsArr[index].array[j] = reminder;
-				number /= allColors;
-				duplicate |= duplicateMap[reminder];
-				duplicateMap[reminder] = true;
+				int number = i;
+
+				for (int j = 0; j < pegsCount; ++j)
+				{
+					allCombinationsArr[i].array[j] = number % allColors;
+					number /= allColors;
+				}
 			}
-
-			if (!duplicate || allowDuplicates)
+		}
+		else
+		{
+			for (int i = 0; i < allCombinations; ++i)
 			{
-				++index;
+				int number = i;
+				char allColorsArr[MAX_COLORS];
+
+				for (int j = 0; j < allColors; ++j) 
+				{
+					allColorsArr[j] = j;
+				}
+
+				for (int j = 0, divider = allColors; j < pegsCount; ++j, --divider)
+				{
+					int index = number % divider;
+					allCombinationsArr[i].array[j] = allColorsArr[index];
+					allColorsArr[index] = allColorsArr[divider - 1];
+					number /= divider;
+				}
 			}
 		}
 	}
