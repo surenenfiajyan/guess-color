@@ -115,12 +115,7 @@ extern "C"
 
 			if (exactMatches == correctPositions && nonExactMatches == incorrectPositions)
 			{
-				++index;
-
-				if (index < i)
-				{
-					combinationsLeftArr[index] = combinationsLeftArr[i];
-				}
+				combinationsLeftArr[++index] = combinationsLeftArr[i];
 			}
 		}
 
