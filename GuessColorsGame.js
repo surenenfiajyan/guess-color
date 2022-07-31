@@ -71,7 +71,7 @@ export class GuessColorsGame {
 
 		this.#gameTypeSwitch.onchange = (ev) => {
 			StorageUtil.saveCurrentGameType(ev.target.value);
-			this.#newGameButton.innerText = ev.target.value === 'normal' ? 'New game' : 'New reverse game';
+			this.#newGameButton.innerText = ev.target.value === 'normal' ? 'New game' : 'New solver game';
 		}
 
 		this.#gameTypeSwitch.value = this.#currentGameType;

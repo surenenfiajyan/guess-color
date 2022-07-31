@@ -13,7 +13,7 @@
 			<button id="newGame">New game</button>
 			<select id="gameType">
 				<option value="normal" selected>Normal game</option>
-				<option value="reverse">Reverse game</option>
+				<option value="reverse">Solver</option>
 			</select>
 			<button title="Settings" id="settings">&#9881;</button>
 			<span class="message statistics" id="gameStatistics">
@@ -29,9 +29,8 @@
 				</div>
 			</template>
 			<h2 id="normalGameTitle">Guess the colors with as few attempts as possible.</h2>
-			<h2 id="reverseGameTitle">This is the reverse game where the computer guesses your colors.
-				Remember or write anywhere any <span id="colorsNumber"></span><span id="reverseGameUniqueWord"> different</span> colors from the list and let the computer to guess them by providing correct hints.
-				This is the list of valid colors: <em></em>.</h2>
+			<h2 id="reverseGameTitle">This is the solver where the computer guesses the colors by provided hints.
+				It will try to find the correct combination of <span id="colorsNumber"></span><span id="reverseGameUniqueWord"> different</span> colors from this color list: <em></em>.</h2>
 			<div id="attemptedColorsContainer">
 			</div>
 			<div class="colors-row" id="colorsToSelect">
