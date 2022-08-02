@@ -54,7 +54,7 @@ export class GuessColorsReverseGame {
 	static async loadWasmModule() {
 		if (this.#wasmModule === undefined) {
 			this.#wasmModule = null;
-			const response = await fetch('../wasm/ReverseGame.wasm');
+			const response = await fetch('./wasm/ReverseGame.wasm');
 			this.#wasmModule = new WebAssembly.Module(await response.arrayBuffer());
 		} else {
 			throw 'Loading twice';
