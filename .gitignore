@@ -1,5 +1,4 @@
-.idea
-.vscode
+.*
 launch.json
 settings.json
 tmp*
