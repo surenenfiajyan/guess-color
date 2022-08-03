@@ -185,89 +185,6 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	background-color: white;
 }
 
-@media screen and (min-width: 769px) {
-	.color-setting {
-		width: 33.33%;
-		height: 30px;
-		line-height: 30px;
-	}
-
-	.color-setting.nowrap {
-		width: 60%;
-	}
-
-	.color-setting .checkbox, .color-setting .radio {
-		width: 20px;
-		height: 20px;
-	}
-	
-	.colors-row .color dialog {
-		width: 100px;
-		border: 1px solid black;
-		position: absolute;
-		margin: 0;
-		padding: 0;
-	}
-
-	.colors-row .color dialog .option {
-		border-radius: 0;
-	}
-
-	.colors-row .color dialog::backdrop {
-		background: transparent;
-	}
-}
-
-@media screen and (max-width: 768px) {
-	.color-setting {
-		width: 50%;
-		height: 50px;
-		line-height: 50px;
-	}
-
-	.color-setting .checkbox, .color-setting .radio  {
-		width: 40px;
-		height: 40px;
-	}
-
-	.color-setting.nowrap {
-		width: 100%;
-	}
-
-	.save-btn, .cancel-btn {
-		width: 100%;
-	}
-
-	.cancel-btn {
-		margin-top: 20px;
-	}
-
-	button {
-		padding: 20px;
-	}
-
-	#newGame, #gameType, #settings {
-		height: 70px;
-	}
-
-	.colors-row .color dialog {
-		border-radius: 10px;
-		top: revert !important;
-		left: revert !important;
-	}
-
-	.colors-row .color dialog::backdrop {
-		cursor: pointer;
-	}
-
-	.colors-row .color dialog .option {
-		display: inline-block;
-		width: 50%;
-		height: 70px;
-		padding: 10px 5px;
-	}
-}
-
 .popup {
 	padding: 20px 40px;
 	box-sizing: border-box;
@@ -303,6 +220,7 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 .settings-form fieldset{
 	text-align: left;
 	margin: 0 0 10px 0;
+	border-radius: 4px;
 }
 
 .color-setting {
@@ -351,5 +269,92 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 
 .color-setting input:checked + .radio::after {
 	border-radius: 50%;
+}
+
+@media screen and (max-width: 768px) {
+	.settings-form {
+		margin-bottom: 6px;
+	}
+
+	.color-setting {
+		width: 50%;
+		height: 40px;
+		line-height: 30px;
+	}
+
+	.color-setting .checkbox, .color-setting .radio  {
+		width: 30px;
+		height: 30px;
+	}
+
+	.color-setting.nowrap {
+		width: 100%;
+	}
+
+	.save-btn, .cancel-btn {
+		width: 100%;
+	}
+
+	.cancel-btn {
+		margin-top: 20px;
+	}
+
+	button {
+		padding: 20px;
+	}
+
+	#newGame, #gameType, #settings {
+		height: 70px;
+	}
+
+	.colors-row .color dialog {
+		border-radius: 10px;
+		top: revert !important;
+		left: revert !important;
+	}
+
+	.colors-row .color dialog::backdrop {
+		cursor: pointer;
+	}
+
+	.colors-row .color dialog .option {
+		display: inline-block;
+		width: 50%;
+		height: 70px;
+		padding: 10px 5px;
+	}
+}
+
+@media screen and (min-width: 769px) {
+	.color-setting {
+		width: 33.33%;
+		height: 30px;
+		line-height: 30px;
+	}
+
+	.color-setting.nowrap {
+		width: 60%;
+	}
+
+	.color-setting .checkbox, .color-setting .radio {
+		width: 20px;
+		height: 20px;
+	}
+	
+	.colors-row .color dialog {
+		width: 100px;
+		border: 1px solid black;
+		position: absolute;
+		margin: 0;
+		padding: 0;
+	}
+
+	.colors-row .color dialog .option {
+		border-radius: 0;
+	}
+
+	.colors-row .color dialog::backdrop {
+		background: transparent;
+	}
 }
 
