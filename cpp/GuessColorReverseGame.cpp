@@ -163,7 +163,7 @@ extern "C"
 				int number = i;
 				char allColorsArr[MAX_COLORS];
 
-				for (int j = 0; j < allColors; ++j) 
+				for (int j = 0; j < allColors; ++j)
 				{
 					allColorsArr[j] = j;
 				}
