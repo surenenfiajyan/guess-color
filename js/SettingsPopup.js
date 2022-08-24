@@ -25,7 +25,7 @@ export class SettingsPopup {
 			html += '<legend align="center">Slots:</legend>';
 
 			for (let k = 3; k <= 8; ++k) {
-				html += `<label class="color-setting"><input name="count" type="radio" value="${k}" ${k === this.#colorsCount ? 'checked' : ''}><span class="radio"></span>${k}</label>`;
+				html += `<label class="color-setting ${k >= 8 && this.#colorsCount !== k ? 'invisible-on-mobile' : ''}"><input name="count" type="radio" value="${k}" ${k === this.#colorsCount ? 'checked' : ''}><span class="radio"></span>${k}</label>`;
 			}
 
 			html += '</fieldset>';

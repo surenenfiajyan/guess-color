@@ -272,6 +272,10 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 }
 
 @media screen and (max-width: 768px) {
+	.invisible-on-mobile {
+		display: none;
+	}
+
 	.settings-form {
 		margin-bottom: 6px;
 	}
