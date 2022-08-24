@@ -18,7 +18,8 @@ main {
 	margin: 0 auto;
 }
 
-h2, .message {
+h2,
+.message {
 	text-align: center;
 	font-size: 20px;
 }
@@ -104,7 +105,7 @@ h2, .message {
 	text-align: left;
 }
 
-.colors-row .color dialog .option:not(:hover):not(:focus){
+.colors-row .color dialog .option:not(:hover):not(:focus) {
 	border-color: transparent;
 	box-shadow: none;
 }
@@ -128,7 +129,9 @@ h2, .message {
 	opacity: 0.6;
 }
 
-button, #gameType, #colorHintsToSelect select {
+button,
+#gameType,
+#colorHintsToSelect select {
 	background-color: aqua;
 	border: 2px solid gray;
 	border-radius: 4px;
@@ -144,23 +147,35 @@ button.try {
 	margin-bottom: 30px;
 }
 
-button:hover, #gameType:hover, #colorHintsToSelect select:hover,
-button:focus, #gameType:focus, #colorHintsToSelect select:focus,
-.colors-row .color:focus, .colors-row .color:hover {
+button:hover,
+#gameType:hover,
+#colorHintsToSelect select:hover,
+button:focus,
+#gameType:focus,
+#colorHintsToSelect select:focus,
+.colors-row .color:focus,
+.colors-row .color:hover {
 	border-color: green;
 	box-shadow: 0 0 5px black;
 }
 
-button:active, #gameType:active, #colorHintsToSelect select:active {
+button:active,
+#gameType:active,
+#colorHintsToSelect select:active {
 	background-color: blue;
 }
 
-#newGame, #gameType, #settings {
+#newGame,
+#gameType,
+#settings {
 	vertical-align: top;
 	height: 40px;
 }
 
-#newGame:active, #gameType:active, #newGame:hover, #gameType:hover {
+#newGame:active,
+#gameType:active,
+#newGame:hover,
+#gameType:hover {
 	position: relative;
 	z-index: 10;
 }
@@ -172,7 +187,7 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 #settings {
 	border-radius: 4px;
 	font-size: 30px;
-    line-height: 26px;
+	line-height: 26px;
 }
 
 #gameType {
@@ -181,7 +196,8 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	border-radius: 0 4px 4px 0;
 }
 
-#gameType option, #colorHintsToSelect option {
+#gameType option,
+#colorHintsToSelect option {
 	background-color: white;
 }
 
@@ -197,12 +213,11 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 }
 
 .popup::backdrop {
-	background: repeating-linear-gradient(
-		135deg,
-		black,
-		black 5px,
-		rgba(0, 0, 0, 0.5) 5px,
-		rgba(0, 0, 0, 0.5) 10px);
+	background: repeating-linear-gradient(135deg,
+			black,
+			black 5px,
+			rgba(0, 0, 0, 0.5) 5px,
+			rgba(0, 0, 0, 0.5) 10px);
 	opacity: 0.6;
 }
 
@@ -213,11 +228,11 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 
 .settings-form {
 	font-size: 15px;
-    font-weight: bold;
+	font-weight: bold;
 	margin-bottom: 20px;
 }
 
-.settings-form fieldset{
+.settings-form fieldset {
 	text-align: left;
 	margin: 0 0 10px 0;
 	border-radius: 4px;
@@ -228,7 +243,8 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	display: inline-block;
 }
 
-.color-setting .checkbox, .color-setting .radio {
+.color-setting .checkbox,
+.color-setting .radio {
 	display: inline-block;
 	border: 2px solid black;
 	border-radius: 3px;
@@ -248,16 +264,19 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	padding: 0;
 }
 
-.color-setting input:disabled + .checkbox, .color-setting input:disabled + .radio {
+.color-setting input:disabled+.checkbox,
+.color-setting input:disabled+.radio {
 	opacity: 0.4;
 }
 
-.color-setting input:focus + .checkbox, .color-setting input:focus + .radio {
+.color-setting input:focus+.checkbox,
+.color-setting input:focus+.radio {
 	border-color: darkgreen;
 	outline: 2px solid darkgreen;
 }
 
-.color-setting input:checked + .checkbox::after, .color-setting input:checked + .radio::after {
+.color-setting input:checked+.checkbox::after,
+.color-setting input:checked+.radio::after {
 	content: "";
 	display: block;
 	background-color: black;
@@ -267,7 +286,7 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 	border-radius: 3px;
 }
 
-.color-setting input:checked + .radio::after {
+.color-setting input:checked+.radio::after {
 	border-radius: 50%;
 }
 
@@ -286,7 +305,8 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 		line-height: 30px;
 	}
 
-	.color-setting .checkbox, .color-setting .radio  {
+	.color-setting .checkbox,
+	.color-setting .radio {
 		width: 30px;
 		height: 30px;
 	}
@@ -295,7 +315,8 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 		width: 100%;
 	}
 
-	.save-btn, .cancel-btn {
+	.save-btn,
+	.cancel-btn {
 		width: 100%;
 	}
 
@@ -307,7 +328,9 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 		padding: 20px;
 	}
 
-	#newGame, #gameType, #settings {
+	#newGame,
+	#gameType,
+	#settings {
 		height: 70px;
 	}
 
@@ -340,11 +363,12 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 		width: 60%;
 	}
 
-	.color-setting .checkbox, .color-setting .radio {
+	.color-setting .checkbox,
+	.color-setting .radio {
 		width: 20px;
 		height: 20px;
 	}
-	
+
 	.colors-row .color dialog {
 		width: 100px;
 		border: 1px solid black;
@@ -361,4 +385,3 @@ button:active, #gameType:active, #colorHintsToSelect select:active {
 		background: transparent;
 	}
 }
-
