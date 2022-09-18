@@ -97,7 +97,6 @@ h2,
 	width: 100%;
 	padding: 5px;
 	box-sizing: border-box;
-	text-indent: calc(50% - 50px);
 	font-size: 15px;
 	height: 35px;
 	white-space: nowrap;
@@ -116,7 +115,6 @@ h2,
 	height: 100%;
 	aspect-ratio: 1;
 	border-radius: 50%;
-	margin: 0 5px;
 	vertical-align: middle;
 	background-color: var(--color);
 }
@@ -338,6 +336,7 @@ button:active,
 		border-radius: 10px;
 		top: revert !important;
 		left: revert !important;
+		width: revert !important;
 	}
 
 	.colors-row .color dialog::backdrop {
@@ -349,6 +348,11 @@ button:active,
 		width: 50%;
 		height: 70px;
 		padding: 10px 5px;
+		text-indent: calc(50% - 50px);
+	}
+
+	.colors-row .color dialog .option::before {
+		margin: 0 5px;
 	}
 }
 
@@ -370,7 +374,6 @@ button:active,
 	}
 
 	.colors-row .color dialog {
-		width: 100px;
 		border: 1px solid black;
 		position: absolute;
 		margin: 0;
@@ -379,6 +382,11 @@ button:active,
 
 	.colors-row .color dialog .option {
 		border-radius: 0;
+		text-indent: -2px;
+	}
+
+	.colors-row .color dialog .option::before {
+		margin-right: 5px;
 	}
 
 	.colors-row .color dialog::backdrop {

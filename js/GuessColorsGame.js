@@ -136,7 +136,8 @@ export class GuessColorsGame {
 
 					if (!modalEl.open) {
 						modalEl.style.top = ev.currentTarget.offsetTop + ev.currentTarget.offsetHeight - 70 - 17 * this.#allColors.length + 'px';
-						modalEl.style.left = `calc(${ev.currentTarget.offsetLeft - window.innerWidth / 2}px + 50vw)`;
+						modalEl.style.left = `calc(${ev.currentTarget.offsetLeft - (window.innerWidth + Math.max(100 - ev.currentTarget.offsetWidth, 0)) / 2}px + 50vw)`;
+						modalEl.style.width = `${Math.max(ev.currentTarget.offsetWidth, 100)}px`;
 						modalEl.showModal();
 						(modalEl.querySelector(`button[data-color="${ev.currentTarget.style.background}"]`) ?? modalEl.firstElementChild).focus();
 						ev.preventDefault();
@@ -158,7 +159,7 @@ export class GuessColorsGame {
 				const optionButton = ev.target.closest('.option');
 				const selectedColor = optionButton?.dataset.color ?? '';
 
-				if (!selectedColor && ev.currentTarget.clientWidth < 110) {
+				if (!selectedColor && ev.currentTarget.clientWidth < 150) {
 					const colorElement = ev.target.closest('.color');
 					const x = ev.clientX;
 					const y = ev.clientY;
