@@ -336,7 +336,7 @@ button:active,
 		border-radius: 10px;
 		top: revert !important;
 		left: revert !important;
-		width: revert !important;
+		width: calc(100vw - 72px) !important;
 	}
 
 	.colors-row .color dialog::backdrop {
