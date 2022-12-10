@@ -275,17 +275,15 @@ export class GuessColorsGame {
 
 					for (const key of mapping.keys()) {
 						if (typeof key === 'number' && key !== oldIndex) {
-							if (key !== oldIndex) {
-								let offset = 0;
+							let offset = 0;
 
-								if (key <= newIndex && key > oldIndex) {
-									offset = -offsetUnit;
-								} else if (key >= newIndex && key < oldIndex) {
-									offset = offsetUnit;
-								}
-
-								mapping.get(key).style.transform = `translateX(${offset}px)`;
+							if (key <= newIndex && key > oldIndex) {
+								offset = -offsetUnit;
+							} else if (key >= newIndex && key < oldIndex) {
+								offset = offsetUnit;
 							}
+
+							mapping.get(key).style.transform = `translateX(${offset}px)`;
 						}
 					}
 				}
