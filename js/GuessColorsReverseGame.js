@@ -1,5 +1,7 @@
 import { StorageUtil } from "./StorageUtil.js";
 
+let wasmPromise;
+
 export class GuessColorsReverseGame {
 	#allColors = [];
 	#allowRepeat = false;
@@ -51,7 +53,7 @@ export class GuessColorsReverseGame {
 		this.#wasmInstance.exports.init(this.#colorsCount, this.#allColors.length, this.#allowRepeat);
 	}
 
-	static async loadWasmModule() {
+	static async #loadWasmModule() {
 		if (this.#wasmModule === undefined) {
 			this.#wasmModule = null;
 			const response = await fetch('./wasm/ReverseGame.wasm');
@@ -59,6 +61,10 @@ export class GuessColorsReverseGame {
 		} else {
 			throw 'Loading twice';
 		}
+	}
+
+	static {
+		wasmPromise = this.#loadWasmModule();
 	}
 
 	newGame() {
@@ -112,3 +118,5 @@ export class GuessColorsReverseGame {
 		);
 	}
 }
+
+await wasmPromise;
