@@ -38,7 +38,7 @@ export class GuessColorsGame {
 	#colorsTemplate = document.getElementById('colorsTemplate');
 
 	// reverse game class
-	#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors, this.#colorsCount);
+	#reverseGame = null;
 
 	constructor() {
 		this.#initSettingsPopup();
@@ -54,9 +54,9 @@ export class GuessColorsGame {
 				const valueElements = this.#colorsHintContainer.getElementsByTagName('select');
 				const correctColorsInCorrectPosition = parseInt(valueElements[0].value);
 				const correctColors = parseInt(valueElements[1].value);
-				this.#reverseGame.hint(this.#selectedColors, correctColorsInCorrectPosition, correctColors);
+				this.#getReverseGame().hint(this.#selectedColors, correctColorsInCorrectPosition, correctColors);
 
-				if (this.#reverseGame.guessed) {
+				if (this.#getReverseGame().guessed) {
 					--this.#currentNumberOfAttempts;
 				}
 
@@ -85,6 +85,19 @@ export class GuessColorsGame {
 		this.#newGame();
 	}
 
+	#getReverseGame() {
+		if (this.#currentGameType === 'reverse' || this.#tryColorsForMeButton.style.display !== 'none') {
+			if (!this.#reverseGame) {
+				this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors, this.#colorsCount);
+			}
+		} else {
+			this.#reverseGame = null;
+		}
+		
+
+		return this.#reverseGame;
+	}
+
 	#initSettingsPopup() {
 		new SettingsPopup(this.#possibleColors, this.#allColors, this.#allowRepeatingColors, this.#colorsCount, (allColors, allowRepeat, colorsCount) => {
 			this.#allColors = allColors;
@@ -93,7 +106,7 @@ export class GuessColorsGame {
 			StorageUtil.saveAvailableColors(allColors);
 			StorageUtil.saveAllowDuplicates(allowRepeat);
 			StorageUtil.saveColorsCount(colorsCount);
-			this.#reverseGame = new GuessColorsReverseGame(this.#allColors, this.#allowRepeatingColors, this.#colorsCount);
+			this.#reverseGame = null;
 			this.#bestNumberOfAttempts = 0;
 			this.#allAttempts = 0;
 			this.#gamesWon = 0;
@@ -362,7 +375,6 @@ export class GuessColorsGame {
 
 	#newGame() {
 		this.#currentGameType = this.#gameTypeSwitch.value;
-		this.#reverseGame.newGame();
 		this.#currentNumberOfAttempts = 0;
 		this.#attemptedColorsContainer.innerText = '';
 		this.#errorMessage.innerText = '';
@@ -401,7 +413,10 @@ export class GuessColorsGame {
 			} else {
 				this.#colorsToGuess = this.#allColors.slice(0, this.#colorsCount);
 			}
+
+			this.#getReverseGame()?.newGame();
 		} else {
+			this.#getReverseGame().newGame();
 			this.#tryColorsForMe();
 		}
 	}
@@ -450,7 +465,7 @@ export class GuessColorsGame {
 			}
 		}
 
-		this.#reverseGame.hint(this.#selectedColors, exactMatches, nonExactMatches);
+		this.#getReverseGame()?.hint(this.#selectedColors, exactMatches, nonExactMatches);
 		return message;
 	}
 
@@ -468,7 +483,7 @@ export class GuessColorsGame {
 
 			this.#attemptedColorsContainer.appendChild(selectedColors);
 
-			if (!comparisonMessage || (this.#currentGameType === 'reverse' && this.#reverseGame.guessed)) {
+			if (!comparisonMessage || (this.#currentGameType === 'reverse' && this.#getReverseGame().guessed)) {
 				this.#endGame();
 			} else {
 				const messageEl = document.createElement('span');
@@ -481,11 +496,11 @@ export class GuessColorsGame {
 	}
 
 	#tryColorsForMe() {
-		if (this.#reverseGame.error) {
+		if (this.#getReverseGame().error) {
 			this.#endGame(true);
 		}
 
-		const selectedColors = this.#reverseGame.guessedColors;
+		const selectedColors = this.#getReverseGame().guessedColors;
 
 		this.#colorsToSelectContainer.querySelectorAll('.color').forEach((colorEl, index) => {
 			colorEl.style.background = selectedColors[index];
