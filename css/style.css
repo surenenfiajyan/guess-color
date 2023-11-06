@@ -37,94 +37,95 @@ h2,
 	margin-top: 10px;
 	padding-bottom: 10px;
 	border-bottom: 2px solid gray;
+
+	&.hint {
+		border-bottom: none;
+		text-align: right;
+		margin: 0 10px;
+	}
+
+	&.error {
+		color: red;
+		border-bottom: none;
+		min-height: 30px;
+	}
+
+	&.statistics {
+		border-bottom: none;
+		padding: 5px;
+		background-color: lightgray;
+		border-radius: 10px;
+	}
+
+	&.victory {
+		border-bottom: none;
+		margin-bottom: 20px;
+	}
 }
 
-.message.hint {
-	border-bottom: none;
-	text-align: right;
-	margin: 0 10px;
-}
-
-.message.error {
-	color: red;
-	border-bottom: none;
-	min-height: 30px;
-}
-
-.message.statistics {
-	border-bottom: none;
-	padding: 5px;
-	background-color: lightgray;
-	border-radius: 10px;
-}
-
-.message.victory {
-	border-bottom: none;
-	margin-bottom: 20px;
-}
 
 .colors-row {
 	display: flex;
 	margin-top: 10px;
-}
 
-.colors-row .color {
-	width: 100%;
-	aspect-ratio: 1;
-	box-sizing: border-box;
-	border-radius: 10px;
-	border: 2px solid gray;
-	cursor: pointer;
-	outline: none;
-	background: url('../icons/icon48.png');
-	background-position: center;
-	background-repeat: no-repeat;
-}
+	.color {
+		width: 100%;
+		aspect-ratio: 1;
+		box-sizing: border-box;
+		border-radius: 10px;
+		border: 2px solid gray;
+		cursor: pointer;
+		outline: none;
+		background: url('../icons/icon48.png');
+		background-position: center;
+		background-repeat: no-repeat;
 
-.colors-row.drag .color {
-	transition: transform 0.2s;
-}
+		.drag & {
+			transition: transform 0.2s;
+		}
 
-.colors-row .color dialog {
-	border: none;
-	width: 85vw;
-	max-width: 400px;
-	box-shadow: 0 0 5px black;
-}
+		& dialog {
+			border: none;
+			width: 85vw;
+			max-width: 400px;
+			box-shadow: 0 0 5px black;
 
-.colors-row .color dialog .option {
-	display: block;
-	width: 100%;
-	padding: 5px;
-	box-sizing: border-box;
-	font-size: 15px;
-	height: 35px;
-	white-space: nowrap;
-	background-color: transparent;
-	text-align: left;
-}
+			.option {
+				display: block;
+				width: 100%;
+				padding: 5px;
+				box-sizing: border-box;
+				font-size: 15px;
+				height: 35px;
+				white-space: nowrap;
+				background-color: transparent;
+				text-align: left;
 
-.colors-row .color dialog .option:not(:hover):not(:focus) {
-	border-color: transparent;
-	box-shadow: none;
-}
+				&:not(:hover):not(:focus) {
+					border-color: transparent;
+					box-shadow: none;
+				}
 
-.colors-row .color dialog .option::before {
-	content: "";
-	display: inline-block;
-	height: 100%;
-	aspect-ratio: 1;
-	border-radius: 50%;
-	vertical-align: middle;
-	background-color: var(--color);
-}
+				&::before {
+					content: "";
+					display: inline-block;
+					height: 100%;
+					aspect-ratio: 1;
+					border-radius: 50%;
+					vertical-align: middle;
+					background-color: var(--color);
+				}
+			}
+		}
+	}
 
-#attemptedColorsContainer .colors-row {
-	pointer-events: none;
-}
+	#attemptedColorsContainer & {
+		pointer-events: none;
+	}
 
-#attemptedColorsContainer.opacity .colors-row {
-	opacity: 0.6;
+	#attemptedColorsContainer.opacity & {
+		opacity: 0.6;
+	}
 }
 
 button,
@@ -194,8 +195,7 @@ button:active,
 	border-radius: 0 4px 4px 0;
 }
 
-#gameType option,
-#colorHintsToSelect option {
+:is(#gameType, #colorHintsToSelect) option {
 	background-color: white;
 }
 
@@ -208,84 +208,84 @@ button:active,
 	width: 90vw;
 	max-width: 600px;
 	text-align: center;
-}
 
-.popup::backdrop {
-	background: repeating-linear-gradient(135deg,
-			black,
-			black 5px,
-			rgba(0, 0, 0, 0.5) 5px,
-			rgba(0, 0, 0, 0.5) 10px);
-	opacity: 0.6;
-}
+	&::backdrop {
+		background: repeating-linear-gradient(135deg,
+				black,
+				black 5px,
+				rgba(0, 0, 0, 0.5) 5px,
+				rgba(0, 0, 0, 0.5) 10px);
+		opacity: 0.6;
+	}
 
-.popup .colors-row {
-	pointer-events: none;
-	margin-top: 25px;
+	.colors-row {
+		pointer-events: none;
+		margin-top: 25px;
+	}
 }
 
 .settings-form {
 	font-size: 15px;
 	font-weight: bold;
 	margin-bottom: 20px;
-}
 
-.settings-form fieldset {
-	text-align: left;
-	margin: 0 0 10px 0;
-	border-radius: 4px;
+	& fieldset {
+		text-align: left;
+		margin: 0 0 10px 0;
+		border-radius: 4px;
+	}
 }
 
 .color-setting {
 	cursor: pointer;
 	display: inline-block;
-}
 
-.color-setting .checkbox,
-.color-setting .radio {
-	display: inline-block;
-	border: 2px solid black;
-	border-radius: 3px;
-	vertical-align: middle;
-	margin-right: 10px;
-}
+	.checkbox,
+	.radio {
+		display: inline-block;
+		border: 2px solid black;
+		border-radius: 3px;
+		vertical-align: middle;
+		margin-right: 10px;
+	}
 
-.color-setting .radio {
-	border-radius: 50%;
-}
+	.radio {
+		border-radius: 50%;
+	}
 
-.color-setting input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-	margin: 0;
-	padding: 0;
-}
+	& input {
+		opacity: 0;
+		width: 0;
+		height: 0;
+		margin: 0;
+		padding: 0;
 
-.color-setting input:disabled+.checkbox,
-.color-setting input:disabled+.radio {
-	opacity: 0.4;
-}
+		&:disabled+.checkbox,
+		&:disabled+.radio {
+			opacity: 0.4;
+		}
 
-.color-setting input:focus+.checkbox,
-.color-setting input:focus+.radio {
-	border-color: darkgreen;
-	outline: 2px solid darkgreen;
-}
+		&:focus+.checkbox,
+		&:focus+.radio {
+			border-color: darkgreen;
+			outline: 2px solid darkgreen;
+		}
 
-.color-setting input:checked+.checkbox::after,
-.color-setting input:checked+.radio::after {
-	content: "";
-	display: block;
-	background-color: black;
-	width: 60%;
-	height: 60%;
-	margin: 20%;
-	border-radius: 3px;
-}
+		&:checked+.checkbox::after,
+		&:checked+.radio::after {
+			content: "";
+			display: block;
+			background-color: black;
+			width: 60%;
+			height: 60%;
+			margin: 20%;
+			border-radius: 3px;
+		}
 
-.color-setting input:checked+.radio::after {
-	border-radius: 50%;
+		&:checked+.radio::after {
+			border-radius: 50%;
+		}
+	}
 }
 
 @media screen and (max-width: 768px) {
@@ -301,16 +301,16 @@ button:active,
 		width: 50%;
 		height: 40px;
 		line-height: 30px;
-	}
 
-	.color-setting .checkbox,
-	.color-setting .radio {
-		width: 30px;
-		height: 30px;
-	}
+		.checkbox,
+		.radio {
+			width: 30px;
+			height: 30px;
+		}
 
-	.color-setting.nowrap {
-		width: 100%;
+		&.nowrap {
+			width: 100%;
+		}
 	}
 
 	.save-btn,
@@ -332,27 +332,31 @@ button:active,
 		height: 70px;
 	}
 
-	.colors-row .color dialog {
-		border-radius: 10px;
-		top: revert !important;
-		left: revert !important;
-		width: calc(100vw - 72px) !important;
-	}
+	.colors-row {
+		.color {
+			& dialog {
+				border-radius: 10px;
+				top: revert !important;
+				left: revert !important;
+				width: calc(100vw - 72px) !important;
 
-	.colors-row .color dialog::backdrop {
-		cursor: pointer;
-	}
+				&::backdrop {
+					cursor: pointer;
+				}
 
-	.colors-row .color dialog .option {
-		display: inline-block;
-		width: 50%;
-		height: 70px;
-		padding: 10px 5px;
-		text-indent: calc(50% - 50px);
-	}
+				.option {
+					display: inline-block;
+					width: 50%;
+					height: 70px;
+					padding: 10px 5px;
+					text-indent: calc(50% - 50px);
 
-	.colors-row .color dialog .option::before {
-		margin: 0 5px;
+					&::before {
+						margin: 0 5px;
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -361,35 +365,39 @@ button:active,
 		width: 33.33%;
 		height: 30px;
 		line-height: 30px;
+
+		&.nowrap {
+			width: 60%;
+		}
+
+		.checkbox,
+		.radio {
+			width: 20px;
+			height: 20px;
+		}
 	}
 
-	.color-setting.nowrap {
-		width: 60%;
-	}
+	.colors-row {
+		.color {
+			& dialog {
+				border: 1px solid black;
+				position: absolute;
+				margin: 0;
+				padding: 0;
 
-	.color-setting .checkbox,
-	.color-setting .radio {
-		width: 20px;
-		height: 20px;
-	}
+				.option {
+					border-radius: 0;
+					text-indent: -2px;
 
-	.colors-row .color dialog {
-		border: 1px solid black;
-		position: absolute;
-		margin: 0;
-		padding: 0;
-	}
+					&::before {
+						margin-right: 5px;
+					}
+				}
 
-	.colors-row .color dialog .option {
-		border-radius: 0;
-		text-indent: -2px;
-	}
-
-	.colors-row .color dialog .option::before {
-		margin-right: 5px;
-	}
-
-	.colors-row .color dialog::backdrop {
-		background: transparent;
+				&::backdrop {
+					background: transparent;
+				}
+			}
+		}
 	}
 }
