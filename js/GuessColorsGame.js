@@ -526,7 +526,13 @@ export class GuessColorsGame {
 				(this.#currentNumberOfAttempts + ' attempts') : 'one attempt'}!!!`;
 
 		if (this.#currentGameType === 'reverse' && !error) {
-			this.#victoryPopupMessage.innerHTML += this.#attemptedColorsContainer.lastElementChild.outerHTML;
+			const clonedContent = this.#attemptedColorsContainer.lastElementChild.cloneNode(true);
+			clonedContent.querySelectorAll('.color').forEach(el => {
+				el.removeAttribute('tabindex');
+				el.removeAttribute('draggable');
+			});
+			clonedContent.querySelectorAll('dialog').forEach(el => el.remove());
+			this.#victoryPopupMessage.append(clonedContent);
 		}
 
 		this.#victoryPopup.showModal();
