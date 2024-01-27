@@ -93,7 +93,6 @@ export class GuessColorsGame {
 		} else {
 			this.#reverseGame = null;
 		}
-		
 
 		return this.#reverseGame;
 	}
