@@ -8,7 +8,7 @@ The game won't run by just opening index.html with Browser, since the game uses 
 3. Another option is hosting the source files with a localhost server.
 4. There is also an [Android app](https://raw.githubusercontent.com/surenenfiajyan/files/main/GuessColor.apk), make sure you have enabled "Unknown sources" on your Android device.
 ## How to build WASM module
-Make sure you have installed Clang C++ compiler (or clang++). In the project directory you can run this command:
+Make sure you have installed Clang C++ compiler (or clang++) 14 or higher. In the project directory you can run this command:
 ```
 clang --target=wasm32 -O3 -fno-builtin --no-standard-libraries '-Wl,--allow-undefined' '-Wl,--import-memory' '-Wl,--export-all' '-Wl,--no-entry' './cpp/GuessColorReverseGame.cpp' -o './wasm/ReverseGame.wasm'
 ```
