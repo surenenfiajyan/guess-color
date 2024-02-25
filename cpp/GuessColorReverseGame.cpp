@@ -67,6 +67,7 @@ extern "C"
 	void transferHintFromJs(unsigned correctPositions, unsigned incorrectPositions, unsigned colorIndex, unsigned color)
 	{
 		hint.array[colorIndex] = color;
+		auto arr = allCombinations == combinationsLeft ? allCombinationsArr : combinationsLeftArr;
 
 		if (colorIndex < pegsCount - 1)
 		{
@@ -82,7 +83,7 @@ extern "C"
 
 			for (int j = 0; j < pegsCount; ++j)
 			{
-				int a = combinationsLeftArr[i].array[j];
+				int a = arr[i].array[j];
 				int b = hint.array[j];
 
 				if (a == b)
@@ -115,7 +116,7 @@ extern "C"
 
 			if (exactMatches == correctPositions && nonExactMatches == incorrectPositions)
 			{
-				combinationsLeftArr[++index] = combinationsLeftArr[i];
+				combinationsLeftArr[++index] = arr[i];
 			}
 		}
 
@@ -145,14 +146,29 @@ extern "C"
 
 		if (allowRepeats)
 		{
-			for (int i = 0; i < allCombinations; ++i)
+			for (int i = 0; i < pegsCount; ++i)
 			{
-				int number = i;
+				allCombinationsArr[0].array[i] = 0;
+			}
+
+			for (int i = 1; i < allCombinations; ++i)
+			{
+				int carry = 1;
 
 				for (int j = 0; j < pegsCount; ++j)
 				{
-					allCombinationsArr[i].array[j] = number % allColors;
-					number /= allColors;
+					int n = allCombinationsArr[i - 1].array[j] + carry;
+
+					if (n >= allColors)
+					{
+						n = 0;
+					}
+					else
+					{
+						carry = 0;
+					}
+
+					allCombinationsArr[i].array[j] = n;
 				}
 			}
 		}
@@ -181,13 +197,9 @@ extern "C"
 
 	void newGame()
 	{
-		for (int i = 0; i < allCombinations; ++i)
-		{
-			combinationsLeftArr[i] = allCombinationsArr[i];
-		}
-
 		combinationsLeft = allCombinations;
 		swapRandomly();
+		combinationsLeftArr[0] = allCombinationsArr[0];
 		transferDataToJs();
 	}
 }
