@@ -1,5 +1,5 @@
-#define MAX_PEGS 8
-#define MAX_COLORS 16
+static const unsigned MAX_PEGS = 8;
+static const unsigned MAX_COLORS = 16;
 
 static unsigned pegsCount, allColors, allCombinations, combinationsLeft;
 static bool allowDuplicates;
@@ -13,7 +13,7 @@ static ColorCombination hint;
 static ColorCombination *allCombinationsArr, *combinationsLeftArr;
 
 extern unsigned char __heap_base;
-static unsigned bump_pointer = reinterpret_cast<unsigned>(&__heap_base);
+static unsigned bumpPointer = reinterpret_cast<unsigned>(&__heap_base);
 
 extern "C"
 {
@@ -25,8 +25,8 @@ extern "C"
 
 static void *allocate(unsigned long size)
 {
-	unsigned int r = bump_pointer;
-	bump_pointer += size;
+	unsigned int r = bumpPointer;
+	bumpPointer += size;
 	growMem(size);
 	return reinterpret_cast<void *>(r);
 }
