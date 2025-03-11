@@ -1,5 +1,10 @@
+@font-face {
+	font-family: 'AppFont';
+	src: url(/fonts/font.ttf);
+}
+
 * {
-	font-family: arial !important;
+	font-family: 'AppFont' !important;
 }
 
 header {
@@ -13,7 +18,7 @@ header {
 }
 
 main {
-	font-family: arial;
+	font-family: 'AppFont';
 	max-width: 500px;
 	margin: 0 auto;
 }
@@ -24,9 +29,8 @@ h2,
 	font-size: 20px;
 }
 
-.github-link {
+.github-link, .donate-link {
 	position: fixed;
-	right: 20px;
 	top: 22px;
 	z-index: 15;
 	text-decoration: none;
@@ -35,6 +39,14 @@ h2,
 	span:not(.icon) {
 		text-decoration: underline;
 	}
+}
+
+.github-link {
+	right: 20px;
+}
+
+.donate-link {
+	right: 100px;
 }
 
 .group {
@@ -302,9 +314,14 @@ button:active,
 }
 
 @media screen and (max-width: 768px) {
-	.github-link {
-		top: 41px;
+	.github-link, .donate-link {
 		font-size: 12px;
+		top: 41px;
+	}
+
+	.donate-link {
+		right: unset;
+		left: 20px;
 	}
 
 	.invisible-on-mobile {
