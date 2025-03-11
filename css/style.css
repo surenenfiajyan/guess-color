@@ -39,6 +39,10 @@ h2,
 	span:not(.icon) {
 		text-decoration: underline;
 	}
+
+	.icon {
+		color: gray;
+	}
 }
 
 .github-link {
