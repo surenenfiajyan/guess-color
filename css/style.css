@@ -35,6 +35,7 @@ h2,
 	z-index: 15;
 	text-decoration: none;
 	font-size: 15px;
+	line-height: 22px;
 
 	span:not(.icon) {
 		text-decoration: underline;
@@ -319,6 +320,7 @@ button:active,
 
 @media screen and (max-width: 768px) {
 	.github-link, .donate-link {
+		line-height: 18px;
 		font-size: 12px;
 		top: 41px;
 	}
