@@ -29,7 +29,7 @@ h2,
 	font-size: 20px;
 }
 
-.github-link, .donate-link {
+.github-link, .blog-link {
 	position: fixed;
 	top: 22px;
 	z-index: 15;
@@ -50,7 +50,7 @@ h2,
 	right: 20px;
 }
 
-.donate-link {
+.blog-link {
 	right: 100px;
 }
 
@@ -319,13 +319,13 @@ button:active,
 }
 
 @media screen and (max-width: 768px) {
-	.github-link, .donate-link {
+	.github-link, .blog-link {
 		line-height: 18px;
 		font-size: 12px;
 		top: 41px;
 	}
 
-	.donate-link {
+	.blog-link {
 		right: unset;
 		left: 20px;
 	}
